@@ -8,10 +8,12 @@ import { useState, useEffect } from 'react';
 import { GridPattern } from '@/components/ui/animated-background';
 import { cn } from '@/lib/utils';
 import { BookingProvider } from '@/context/BookingContext';
+import Head from 'next/head';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
+  
   children,
 }: {
   children: React.ReactNode;
@@ -29,6 +31,12 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="dark">
+      <head>
+        <title>DineEase</title>
+        <meta name="description" content="Effortless table reservations with DineEase." />
+        <meta name="theme-color" content="#ffffff" />
+        <link rel="icon" href="/favicon.png" type="image/x-icon" />
+      </head>
       <body className={inter.className}>
         <BookingProvider>
           <GridPattern
