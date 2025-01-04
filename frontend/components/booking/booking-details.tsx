@@ -8,7 +8,12 @@ import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { format, parse } from 'date-fns';
 
 interface BookingDetailsProps {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: {
+    name: string;
+    contact: string;
+    date: string;
+    guests: string;
+  }) => void;
   initialData: {
     name: string;
     contact: string;
@@ -32,14 +37,20 @@ export default function BookingDetails({ onSubmit, initialData }: BookingDetails
     visible: { opacity: 1, y: 0 },
   };
 
-  const handleFormSubmit = (data: any) => {
+  const handleFormSubmit = (data: {
+    name: string;
+    contact: string;
+    date: Date | undefined;
+    guests: string;
+  }) => {
     const formattedData = {
       ...data,
       date: data.date ? format(data.date, 'yyyy-MM-dd') : '',
-      guests: parseInt(data.guests, 10),
+      guests: data.guests,
     };
     onSubmit(formattedData);
   };
+  
 
   return (
     <motion.div
@@ -113,9 +124,12 @@ export default function BookingDetails({ onSubmit, initialData }: BookingDetails
               control={control}
               rules={{
                 required: 'Number of guests is required',
-                min: { value: 1, message: 'Minimum 1 guest required' },
-                max: { value: 10, message: 'Maximum 10 guests allowed' },
+                pattern: {
+                  value: /^[1-9]$|^10$/, // Regex for 1 to 10 as strings
+                  message: 'For more than 10 guests, please contact us directly.',
+                },
               }}
+              
               render={({ field }) => (
                 <FloatingLabelInput
                   label="Number of Guests"

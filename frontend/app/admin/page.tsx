@@ -6,12 +6,21 @@ import { DatePicker } from '@/components/ui/date-picker';
 import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import Link from 'next/link';
 
+interface Booking {
+  _id: string;
+  name: string;
+  contact: string;
+  tableNumber: number;
+  time: string;
+  guestCount: number;
+}
+
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [error, setError] = useState('');
-  const [displayedBookings, setDisplayedBookings] = useState<any[]>([]);
+  const [displayedBookings, setDisplayedBookings] = useState<Booking[]>([]);
   const [showBookings, setShowBookings] = useState(false);
 
   const ADMIN_PASSWORD = 'admin';

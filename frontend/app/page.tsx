@@ -29,6 +29,7 @@ export default function Home() {
       },
     },
   };
+
   useEffect(() => {
     const pingBackend = async () => {
       try {
@@ -47,12 +48,13 @@ export default function Home() {
 
     pingBackend();
   }, []);
-  
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative">
+      {/* GitHub Link */}
       <Link
         href="https://github.com/Reizhea/DineEase"
-        target='_blank'
+        target="_blank"
         className="absolute top-4 left-4 transition-transform hover:scale-105"
       >
         <Button variant="ghost" size="icon" className="rounded-full bg-white/10 hover:bg-white/20">
@@ -60,6 +62,7 @@ export default function Home() {
         </Button>
       </Link>
 
+      {/* Main Content */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -92,6 +95,11 @@ export default function Home() {
           </Link>
         </motion.div>
       </motion.div>
+
+      {/* Bottom Right Note */}
+      <div className="absolute bottom-4 right-4 text-sm text-muted-foreground">
+        The server may take a moment to initialize on the first request.
+      </div>
     </div>
   );
 }

@@ -20,8 +20,13 @@ export default function BookingPage() {
     table: ''
   })
   const router = useRouter()
-
-  const handleDetailsSubmit = (data: any) => {
+  interface BookingDetails {
+    name: string;
+    contact: string;
+    date: string;
+    guests: string;
+  }
+  const handleDetailsSubmit = (data: BookingDetails) => {
     setBookingData({ ...bookingData, ...data })
     setStep(2)
   }

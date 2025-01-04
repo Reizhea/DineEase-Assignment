@@ -1,16 +1,25 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState, useRef, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-export default function SummaryPage() {
-  const [bookingData, setBookingData] = useState<any>(null);
-  const [isBookingConfirmed, setIsBookingConfirmed] = useState(false); 
+interface BookingData {
+  name: string;
+  contact: string;
+  date: string;
+  time: string;
+  guests: string;
+  table: string;
+}
+
+function SummaryPageContent() {
+  const [bookingData, setBookingData] = useState<BookingData | null>(null);
   const searchParams = useSearchParams();
   const hasSubmitted = useRef(false);
+  const router = useRouter();
 
   useEffect(() => {
     const bookingDataParam = searchParams.get('bookingData');
@@ -19,15 +28,17 @@ export default function SummaryPage() {
       setBookingData(parsedData);
 
       if (!hasSubmitted.current) {
-        confirmBooking(parsedData);
-        hasSubmitted.current = true;
+        confirmBooking(parsedData); // Ensure this is called only once
+        hasSubmitted.current = true; // Set the flag after submission
       }
+    } else {
+      router.push('/'); // Redirect to the home page if no data is found
     }
-  }, [searchParams]);
+  }, [searchParams, router]);
 
-  const confirmBooking = async (data: any) => {
+  const confirmBooking = async (data: BookingData) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/createBooking`, {
+      await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/createBooking`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -39,13 +50,6 @@ export default function SummaryPage() {
           tableNumber: data.table.split(' ')[1],
         }),
       });
-
-      if (response.ok) {
-        const result = await response.json();
-        setIsBookingConfirmed(true);
-      } else {
-        console.error('Failed to create booking:', await response.text());
-      }
     } catch (error) {
       console.error('Error creating booking:', error);
     }
@@ -147,5 +151,13 @@ export default function SummaryPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function SummaryPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SummaryPageContent />
+    </Suspense>
   );
 }
