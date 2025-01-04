@@ -8,7 +8,6 @@ import { useState, useEffect } from 'react';
 import { GridPattern } from '@/components/ui/animated-background';
 import { cn } from '@/lib/utils';
 import { BookingProvider } from '@/context/BookingContext';
-import Head from 'next/head';
 
 const inter = Inter({ subsets: ['latin'] });
 
