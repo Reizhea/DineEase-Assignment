@@ -6,7 +6,7 @@ const bookingSchema = new mongoose.Schema({
     guestCount: { type: Number, required: true },
     name: { type: String, required: true },
     contact: { type: String, required: true },
-    tableNumber: { type: Number, required: true }, // Add tableNumber
+    tableNumber: { type: Number, required: true },
   }, { timestamps: true });
   
   module.exports = mongoose.model('Booking', bookingSchema);
