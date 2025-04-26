@@ -25,7 +25,7 @@ Effortless table reservations made easy with **DineEase**. This project provides
 ### For Visitors
 
 1. **Explore the Booking System**:
-   - Visit the live site [here](https://dine-ease-9r8sge2vg-reizheas-projects.vercel.app).
+   - Visit the live site [here](https://dine-ease-nu.vercel.app).
    - Click **"Book Now"** on the homepage to navigate to the booking system.
 
 2. **Make a Reservation**:
